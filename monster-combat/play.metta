@@ -41,11 +41,6 @@
         ) (run (- $iter 1))
     )
 ))
-!(run 10)
 
-; !("--- Initial Rules ---")
-; ; !(get-atoms &rules)
-; !("--- Starting Game Loop ---")
-; !(game-loop ((Position CLOSE_RANGE)) (HIT) &rules)
-; !("--- After 1st Loop ---")
+!(run 10)
 !(get-atoms &rules)

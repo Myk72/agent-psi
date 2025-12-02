@@ -1,15 +1,13 @@
+;; Math utilities for Metta
+
 (= (getRandomInt $min $max) (
     (py-atom random.randint) $min $max
 ))
 
-;; Returns a random number between 0 - 1
-; TODO: implement manually for mettalog compatibility
 (= (getRandom) (
     (py-atom random.random)
 ))
 
-;; Returns the logarithm of a value to the base given
-; TODO: implement manually
 (= (log $value) (
     (py-atom math.log) $value
 ))
@@ -49,4 +47,4 @@
     ) (sample-engine $alpha $beta $a $b $gamma)
 ))
 
-; !(beta-sample 100000 1)
+!(beta-sample 20.0 10.)
