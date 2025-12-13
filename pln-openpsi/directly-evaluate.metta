@@ -1,6 +1,6 @@
 !(import! &self utils:rule-ops)
 !(import! &self utils:util)
-!(import! &self directly-evaluate-utils)
+!(import! &self utils:directly-evaluate-utils)
 
 ;; ============================================================================
 ;; Main Entry Point: pln-directly-evaluate
