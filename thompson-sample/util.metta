@@ -1,11 +1,3 @@
-; (= (sameElements $rule $list1 $list2) (if (not (== (size-atom $list1) (size-atom $list2)))
-;         False
-;         (let $intersection (intersection-atom $list1 $list2) (if (== (size-atom $intersection) (size-atom $list1))
-;             $rule
-;             Empty)
-;         )
-; ))
-
 (= (matchGoals $goals $rules) (
     if (== $rules ())
         ()
@@ -25,28 +17,6 @@
         (let $intersection (intersection-atom $list1 $list2) (== (size-atom $intersection) (size-atom $list1)))      
 ))
 
-; (= (matchGoals $goals $rules) (
-;     ; collapse (let $rule (superpose $rules) (let $rule-goals (extractRuleGoalValues $rule) (if (sameElements $goals $rule-goals) $rule Empty))))
-;     map-atom $rules $rule (let $rule-goals (extractRuleGoalValues $rule) (sameElements $rule $goals $rule-goals))
-; )
-
-; (= (sameElements $list1 $list2) (
-;     let* (
-;         ($_ (println! ("Comparing lists: " $list1 " and " $list2)))
-;     )
-;     (if (not (== (size-atom $list1) (size-atom $list2)))
-;         False
-;         (let $intersection (intersection-atom $list1 $list2) (== (size-atom $intersection) (size-atom $list1)))      
-; )))
-
-; (= (matchGoals $goals $rules) (
-;     let* (
-;         ($_ (println! (Matching goals:  $goals against rules.)))
-;         ($matching (collapse (let $rule (superpose $rules) (let $rule-goals (extractRule GoalValues $rule) (if (sameElements $goals $rule-goals) $rule Empty)))))
-;     ) $matching
-;     ; collapse (let $rule (superpose $rules) (if (sameElements $goals (extractRuleGoalValues $rule)) $rule Empty))
-; ))
-
 (= (matchContexts $rules $contexts) (
     if (== $rules ())
         ()
@@ -60,7 +30,6 @@
         ))
 ))
 
-; (: thompsonSample (-> Expression hyperon::space::DynSpace (Number Number)))
 (= (thompsonSample $rules) (
     if (== $rules ())
         (-1 0) ; (Rule, Sampled Value)
@@ -113,6 +82,5 @@
         ((: Rule $id $ttv (STV $os $oc) $comp $context $action $goal) $rule)
         ($newRule (: Rule $id $ttv (STV $s $c) $comp $impl))
         ($_ (updateAtom $space $rule $newRule))
-        ($_ (println! ("New rule: " $newRule)))
     ) ()
 ))
