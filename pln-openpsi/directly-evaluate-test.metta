@@ -21,13 +21,7 @@
 !(add-atom &perceptaSpace (: Percepta 8 (RIGHT_SQUARE DEAD)))
 !(add-atom &perceptaSpace (: Percepta 9 (CENTER_SQUARE STILL_ALIVE)))
 
-;; ============================================================================
-;; Test Setup: Create Rule Space with Test Rules
-;; ============================================================================
-
-;; Create rule space
 !(bind! &ruleSpace (new-space))
-
 
 ;; Result: 3 match out of 10 observations = 0.3 frequency
 !(add-atom &ruleSpace (: Rule 3
@@ -46,9 +40,4 @@
         )) 
 )))
 
-;; ============================================================================
-;; Run Direct Evaluation
-;; ============================================================================
-
-; !(facts-in-percepta (LEFT_SQUARE STILL_ALIVE) ((LEFT_SQUARE STILL_ALIVE) (CENTER_SQUARE STILL_ALIVE) (LEFT_SQUARE STILL_ALIVE)))
 !(pln-directly-evaluate &ruleSpace &perceptaSpace)
