@@ -49,3 +49,7 @@
 
 (: round (-> Number Number Number))
 (= (round $num $sig) ((py-atom round) $num $sig))
+
+(= (generateIdRand) (
+    ((py-atom random.randint) 10000 99999)
+))
