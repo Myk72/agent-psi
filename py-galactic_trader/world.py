@@ -5,7 +5,7 @@ PRICE_TABLE = {
 }
 
 AVERAGE_COST = {
-    "FOOD": 13,
+    "FOOD": 15.33,
     "METAL": 15,
     "FUEL": 16,
 }
@@ -35,8 +35,8 @@ def is_valid_rule(rule, state):
         if state.money < item_price:
             return False
         # Prevent from double buying
-        if state.context.get('item', None):
-            return False
+        # if state.context.get('item', None):
+        #     return False
     
     elif rule_action == "travel":
         travel_cost = get_travel_cost(rule_context['planet'], rule.goal['planet'])
@@ -64,13 +64,13 @@ def execute_rule(chosen_rule, state):
         item = chosen_rule.goal['item']
         item_price = get_price(state.context['planet'], item)
         state.money -= item_price
-        state.context = chosen_rule.goal
+        state.context = chosen_rule.goal.copy()
     
     elif rule_action == 'sell':
         item = chosen_rule.context['item']
         item_price = get_price(state.context['planet'], item)
         state.money += item_price
-        state.context = chosen_rule.goal
+        state.context = chosen_rule.goal.copy()
     return state
 
 def evaluate_state(new_state, state):

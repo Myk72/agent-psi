@@ -18,9 +18,9 @@ class Rule:
 
     def update(self, reward: float):
         if reward > 0:
-            self.alpha += 1
+            self.alpha += reward
         elif reward < 0:
-            self.beta += 1
+            self.beta += abs(reward)
         else:
             self.alpha += 1
             self.beta += 1
