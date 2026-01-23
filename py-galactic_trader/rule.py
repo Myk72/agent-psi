@@ -11,16 +11,20 @@ class Rule:
         self.beta = 1
 
     def __repr__(self):
-        return self.name
+        return f"{self.name} {self.context} & {self.action} => {self.goal}"
 
     def get_sample_value(self) -> float:
         return np.random.beta(self.alpha, self.beta)
 
     def update(self, reward: float):
         if reward > 0:
-            self.alpha += reward
+            self.alpha += 1
+        elif reward < 0:
+            self.beta += 1
         else:
-            self.beta += abs(reward)
+            self.alpha += 1
+            self.beta += 1
+        
 
 world_context = ['A', 'B', 'C']
 item_context = ['FOOD', 'METAL', 'FUEL']
@@ -34,7 +38,7 @@ for source in world_context:
         rule = Rule(
             name=f"TRAVEL_{source}_TO_{dest}",
             context={"planet": source},
-            action=["travel"],
+            action="travel",
             goal={"planet": dest}
         )
         rule_collection.append(rule)
@@ -46,7 +50,7 @@ for planet in world_context:
             Rule(
                 name=f"SELL_{item}_AT_{planet}",
                 context={"planet": planet, "item": item},
-                action=["sell"],
+                action="sell",
                 goal={"planet": planet}
             )
         )
@@ -57,8 +61,8 @@ for planet in world_context:
         rule_collection.append(
             Rule(
             name=f"BUY_{item}_AT_{planet}",
-            context={"planet": planet, "item": item},
-            action=["buy"],
+            context={"planet": planet},
+            action="buy",
             goal={"planet": planet, "item": item}
         )
     )
