@@ -1,16 +1,18 @@
-!(register-module! ../../metta-trader)
+!(import! &self ../inference/deduction)
+!(import! &self ../inference/induction)
+!(import! &self ../inference/abduction)
+!(import! &self ../inference/conjunction)
+!(import! &self ../formula)
+!(import! &self ../utils)
 
-!(import! &self metta-trader:pln:inference:abduction)
-!(import! &self metta-trader:pln:inference:conjunction)
-!(import! &self metta-trader:pln:inference:deduction)
-!(import! &self metta-trader:pln:inference:induction)
-!(import! &self metta-trader:pln:formula)
-!(import! &self metta-trader:pln:rule:rule)
-!(import! &self metta-trader:pln:utils)
+!(import! &self ../rule/query)
+!(import! &self ../rule/inference-utils)
+!(import! &self ../rule/helpers)
 
 !(bind! &ruleSpace (new-space))
 
-!(add-reduct &ruleSpace (superpose (
+(= (addRule $ruleSpace) ( 
+    let $rules (superpose (
     ;; Rule 1
     (: Rule 1
         (TTV 0)
@@ -61,7 +63,11 @@
                     (STILL_ALIVE (STV 0.2 0.1)))
         )) 
     ))
-)))
+
+    )) (add-atom $ruleSpace $rules)
+))
+
+
 
 (= (pln-reasoning $rules) (
     let* (
@@ -76,7 +82,8 @@
         ($_ (println! (Induction Results: $inductionResults)))
         
         ($reasonedRules (flattenList ($deductionResults $conjunctionResults $abductionResults $inductionResults)))
-
+        ; ($_ (println! ("Reasoned size: " (size-atom $reasonedRules))))
+        
         ;; Give them unique IDs, TTV, and Complexity
         ($prevRuleId (getLatestRuleId $rules))
         ($prevTTV (getCurrentTimeCycle $rules))
@@ -87,5 +94,6 @@
     ) $newRules
 ))
 
-!(bind! &rules (collapse (get-atoms &ruleSpace)))
-!(pln-reasoning &rules)
+!(addRule &ruleSpace)
+
+!(pln-reasoning (collapse (get-atoms &ruleSpace)))

@@ -10,11 +10,11 @@
         ()
         (let* (
             (($rule $remRules) (decons-atom $rules))
-            ($premise-one (extractRule ContextSTV $rule))
-            ($premise-two (extractRule GoalSTV $rule))
-            ($premise-four (extractRule STV $rule))
+            ($premise-one (eval (extractRule ContextSTV $rule)))
+            ($premise-two (eval (extractRule GoalSTV $rule)))
+            ($premise-four (eval (extractRule STV $rule)))
             ($premises ($premise-one $premise-two $premise-four))
-            ($matchingRuleAbductions (getMatchingPremises $premises $rule $remRules))
+            ($matchingRuleAbductions (eval (getMatchingPremises abduction $premises $rule $remRules)))
             ($restAbductions (abduction-helper $remRules))
         ) (union-atom $restAbductions $matchingRuleAbductions))
 ))
@@ -22,21 +22,21 @@
 (= (reason-abd $rule $matchingRule $premises) (
     let* (
         ($randomNo 100) ;; TODO: Fix this
-        ($ruleContext (extractRule Context $rule))
-        ($matchingContext (extractRule Context $matchingRule))
-        ($matchingGoal (extractRule Goal $matchingRule))
-        ($matchingGoalSTV (extractRule GoalSTV $matchingRule))
+        ($ruleContext (eval (extractRule Context $rule)))
+        ($matchingContext (eval (extractRule Context $matchingRule)))
+        ($matchingGoal (eval (extractRule Goal $matchingRule)))
+        ($matchingGoalSTV (eval (extractRule GoalSTV $matchingRule)))
 
-        ($ruleAction (extractRule Action $rule))
-        ($ruleContextSTV (extractRule ContextSTV $rule))
-        ($matchingRuleAction (extractRule Action $matchingRule))
+        ($ruleAction (eval (extractRule Action $rule)))
+        ($ruleContextSTV (eval (extractRule ContextSTV $rule)))
+        ($matchingRuleAction (eval (extractRule Action $matchingRule)))
         ($newRuleAction (union-atom $ruleAction $matchingRuleAction))
 
         (($premise-one $premise-two $premise-four) $premises)
-        ($premise-three (extractRule ContextSTV $matchingRule))
-        ($premise-five (extractRule STV $matchingRule))
+        ($premise-three (eval (extractRule ContextSTV $matchingRule)))
+        ($premise-five (eval (extractRule STV $matchingRule)))
 
-        ($newRuleSTV (abductionFormula $premise-one $premise-two $premise-three $premise-four $premise-five))
+        ($newRuleSTV (eval (abductionFormula $premise-one $premise-two $premise-three $premise-four $premise-five)))
 
         ($newRule (: Rule $randomNo (TTV 1) $newRuleSTV (Complexity 1) (IMPLICATION (AND (Context $ruleContextSTV (AND $matchingContext)) (Action (SEQ_AND $matchingRuleAction))) (Goal $matchingGoalSTV (AND $ruleContext)))))
     ) $newRule

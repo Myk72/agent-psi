@@ -1,12 +1,13 @@
-!(register-module! ../../metta-trader)
+!(import! &self inference/deduction)
+!(import! &self inference/induction)
+!(import! &self inference/abduction)
+!(import! &self inference/conjunction)
+!(import! &self formula)
+!(import! &self utils)
 
-!(import! &self metta-trader:pln:inference:abduction)
-!(import! &self metta-trader:pln:inference:conjunction)
-!(import! &self metta-trader:pln:inference:deduction)
-!(import! &self metta-trader:pln:inference:induction)
-!(import! &self metta-trader:pln:formula)
-!(import! &self metta-trader:pln:rule:rule)
-!(import! &self metta-trader:pln:utils)
+!(import! &self rule/query)
+!(import! &self rule/inference-utils)
+!(import! &self rule/helpers)
 
 (= (pln-reasoning $rules) (
     let* (
@@ -21,7 +22,8 @@
         ($_ (println! (Induction Results: $inductionResults)))
         
         ($reasonedRules (flattenList ($deductionResults $conjunctionResults $abductionResults $inductionResults)))
-
+        
+        
         ;; Give them unique IDs, TTV, and Complexity
         ($prevRuleId (getLatestRuleId $rules))
         ($prevTTV (getCurrentTimeCycle $rules))

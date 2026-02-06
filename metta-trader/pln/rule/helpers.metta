@@ -1,29 +1,26 @@
 ;; General Rule helpers
 
-;; (: createRule (-> Number Number Expression Expression))
 (= (createRule $ruleId $ttv $rule) (
     let* (
         ($complexity (calculateComplexity $rule))
-        ($_ (println! (Rule $complexity)))
+        ; ($_ (println! (Rule $complexity)))
 
         ((: Rule $id $t $stv $comp $implication) $rule)
-        ($_ (println! (: Rule $id $t $stv $comp $implication)))
+        ; ($_ (println! (: Rule $id $t $stv $comp $implication)))
         ($newRule (: Rule $ruleId (TTV $ttv) $stv (Complexity $complexity) $implication))
-        ($_ (println! (New Rule $newRule)))
+        ; ($_ (println! (New Rule $newRule)))
     ) $newRule
 ))
 
-(: chainActions (-> Expression Expression Expression))
+
 (= (chainActions $actionOne $actionTwo) (
     SEQ_AND (union-atom $actionOne $actionTwo)
 ))
 
-(: chainGoals (-> Expression Expression Expression))
 (= (chainGoals $goalOne $goalTwo) (
-
+    FOR_TESTING_PURPOSES_ONLY ;; TODO
 ))
 
-(: (visualizeRule (-> Expression Expression)))
 (= (visualizeRule $rule) (
     let* (
         ($contexts (extractRule ContextValues $rule))
@@ -33,13 +30,14 @@
     ) $visual
 ))
 
-(: (removeDuplicateRules (-> Expression Expression)))
+
 (= (removeDuplicateRules $rules) (
     ; TODO
+    FOR_TESTING_PURPOSES_ONLY
 ))
 
 ;; For now complexity is the number of actions in the rule
-(: calculateComplexity (-> Expression Number))
+
 (= (calculateComplexity $rule) (
     let* (
         ($action (extractRuleAction $rule))
@@ -48,7 +46,7 @@
 ))
 
 ;; This could be optimized by adding an atom that tracks the max TTV in the rule space instead of searching every time
-(: getCurrentTimeCycleFromSpace (-> hyperon::space::DynSpace Number))
+
 (= (getCurrentTimeCycleFromSpace $ruleSpace) (
     let* (
         ($rules (collapse (get-atoms $ruleSpace)))
@@ -57,7 +55,7 @@
     ) (toInt $currTTV)
 ))
 
-(: getCurrentTimeCycle (-> Expression Number))
+
 (= (getCurrentTimeCycle $rules) (
     let* (
         ($ttvValues (map-atom $rules $rule (extractRule TTV $rule)))
@@ -66,7 +64,7 @@
 ))
 
 ;; 
-(: getLatestRuleIdFromSpace (-> hyperon::space::DynSpace Number))
+
 (= (getLatestRuleIdFromSpace $ruleSpace) (
     let* (
         ($rules (collapse (get-atoms $ruleSpace)))
@@ -75,7 +73,6 @@
     ) (toInt $currId)
 ))
 
-(: getLatestRuleId (-> Expression Number))
 (= (getLatestRuleId $rules) (
     let* (
         ($ruleIds (map-atom $rules $rule (extractRule Id $rule)))
@@ -159,5 +156,3 @@
         ) (cons-atom $newRule $rest))
 ))
 
-;; (= (Rules) ((: Rule 1 (TTV 0) (STV 0.5 0.002) (Complexity 1) (IMPLICATION (AND (Context (STV 0.2 0.1) (AND ((LEFT_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1))))) (Action (SEQ_AND (MOVE_RIGHT)))) (Goal (STV 0.2 0.1) (AND ((CENTER_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1))))))) (: Rule 3 (TTV 0) (STV 0.5 0.002) (Complexity 1) (IMPLICATION (AND (Context (STV 0.2 0.1) (AND ((LEFT_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1))))) (Action (SEQ_AND (MOVE_RIGHT)))) (Goal (STV 0.2 0.1) (AND ((CENTER_SQUARE (STV 0.2 0.1)) (DEAD (STV 0.2 0.1))))))) (: Rule 2 (TTV 0) (STV 0.5 0.002) (Complexity 1) (IMPLICATION (AND (Context (STV 0.2 0.1) (AND ((CENTER_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1))))) (Action (SEQ_AND (MOVE_RIGHT)))) (Goal (STV 0.2 0.1) (AND ((RIGHT_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1)))))))))
-;; !(processRules (Rules) 10 1)

@@ -12,10 +12,13 @@
                     (STV $sC $cC)
                     (STV $sBA $cBA)
                     (STV $sBC $cBC))
-   (STV (+ (/safe (* (* $sBA $sBC) $sB) $sA)
-           (* (- 1 (/safe (* $sBA $sB) $sA))
-              (/safe (- $sC (* $sB $sBC)) (- 1 $sB))))
-        (Truth_w2c (min $cBA $cBC))))
+    (let* (
+        ($op1 (eval (/safe (* (* $sBA $sBC) $sB) $sA)))
+        ($op2 (* (- 1 (eval (/safe (* $sBA $sB) $sA)))
+               (eval (/safe (- $sC (* $sB $sBC)) (- 1 $sB)))))
+        ($strength (+ $op1 $op2))
+        ($confidence (Truth_w2c (min $cBA $cBC)))
+    ) (STV $strength $confidence)))
 
 ; Abduction formula: PLN book "Appendix A: Comparison of PLN Rules with NARS Rules", page 307
 (= (abductionFormula (STV $sA $cA)
@@ -23,11 +26,12 @@
                     (STV $sC $cC)
                     (STV $sAB $cAB)
                     (STV $sCB $cCB))
-   (STV (+ (/safe (* (* $sAB $sCB) $sC)
-                  $sB)
-           (/safe (* $sC (* (- 1 $sAB) (- 1 $sCB)))
-                  (- 1 $sB)))
-        (Truth_w2c (min $cAB $cCB))))
+    (let* (
+        ($op1 (eval (/safe (* (* $sAB $sCB) $sC) $sB)))
+        ($op2 (eval (/safe (* $sC (* (- 1 $sAB) (- 1 $sCB))) (- 1 $sB))))
+        ($strength (+ $op1 $op2))
+        ($confidence (Truth_w2c (min $cAB $cCB)))
+    ) (STV $strength $confidence)))
 
 ;; Conjunction Introduction Formula
 (= (conjunctionFormula (STV $Ps $Pc) (STV $Qs $Qc)) (
@@ -35,6 +39,5 @@
 ))
 
 ;; Helper Function
-(: Truth_w2c (-> Number Number))
 (= (Truth_w2c $w)
-   (/safe $w (+ $w 1)))
+   (eval (/safe $w (+ $w 1))))

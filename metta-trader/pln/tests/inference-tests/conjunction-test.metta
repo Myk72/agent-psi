@@ -1,13 +1,15 @@
-!(register-module! ../../../../metta-trader)
+!(import! &self ../../inference/conjunction)
+!(import! &self ../../formula)
+!(import! &self ../../utils)
 
-!(import! &self metta-trader:pln:inference:conjunction)
-!(import! &self metta-trader:pln:formula)
-!(import! &self metta-trader:pln:rule:rule)
-!(import! &self metta-trader:pln:utils)
+!(import! &self ../../rule/query)
+!(import! &self ../../rule/inference-utils)
+!(import! &self ../../rule/helpers)
 
 !(bind! &ruleSpace (new-space))
 
-!(add-reduct &ruleSpace (superpose (
+(= (addRule $ruleSpace) ( 
+    let $rules (superpose (
     ;; Rule 1
     (: Rule 1
         (TTV 0)
@@ -59,6 +61,9 @@
         )) 
     ))
 
-)))
+    )) (add-atom $ruleSpace $rules)
+))
 
-!(pln-conjunction &ruleSpace)
+
+!(addRule &ruleSpace)
+!(pln-conjunction (collapse(get-atoms &ruleSpace)))

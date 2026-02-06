@@ -1,3 +1,8 @@
+(= (unify $a $b $then $else)
+   (if (= $a $b)
+       (eval $then)
+       (eval $else)))
+
 (= (extractRule $section $rule) (
     case $section (
         (Id (extractRuleId $rule))
@@ -17,14 +22,14 @@
     )
 ))
 
-(: extractRuleId (-> Expression Number))
+
 (= (extractRuleId $rule) (
     unify (: Rule $id $ttv $stv $complexity $implication) $rule
         $id
         -1
 ))
 
-(: extractRuleTTV (-> Expression Number))
+
 (= (extractRuleTTV $rule) (
     unify (: Rule $id (TTV $ttv) $stv $complexity $implication) $rule
         $ttv
@@ -35,7 +40,7 @@
     unify (: Rule $id $ttv $stv $complexity (IMPLICATION (AND (Context $context-stv (AND $context)) $action) $goal))
       $rule
       $context
-      Empty         
+      empty        
 ))
 
 (= (extractRuleContextValues $rule) (
@@ -45,17 +50,17 @@
 (= (extractRuleAction $rule) (
     unify (: Rule $id $ttv $stv $complexity (IMPLICATION (AND $context (Action (SEQ_AND $action))) $goal)) $rule
         $action
-        Empty
+        empty
 ))
 
 (= (extractRuleGoal $rule) (
     unify (: Rule $id $ttv $stv $complexity (IMPLICATION $and-link (Goal $goal-stv (AND $goal)))) $rule
         $goal
-        Empty
+        empty
 ))
 
 (= (extractRuleGoalValues $rule) (
-    let $goals (extractRuleGoal $rule) (map-atom $goals $goal (car-atom $goal))
+    let $goals (eval (extractRuleGoal $rule)) (map-atom $goals $goal (car-atom $goal))
 ))
 
 (= (extractRuleSTV $rule) (
@@ -79,17 +84,17 @@
 (= (extractContextAndAction $rule) (
     unify (: Rule $id $ttv $stv $complexity (IMPLICATION $contextAction $goal)) $rule
         $contextAction
-        Empty
+        empty
 ))
 
 (= (extractAllGoal $rule) (
     unify (: Rule $id $ttv $stv $complexity (IMPLICATION $contextAction $goal)) $rule
         $goal
-        Empty
+        empty
 ))
 
 (= (extractAllContext $rule) (
     unify (: Rule $id $ttv $stv $complexity (IMPLICATION (AND $context $action) $goal)) $rule
         $context
-        Empty
+        empty
 ))

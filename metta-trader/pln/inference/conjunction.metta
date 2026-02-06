@@ -24,10 +24,11 @@
         ()
         (let* (
             (($head $tail) (decons-atom $rules))
-            ($matchingContext (extractRule ContextValues $head))
-            ($matchingAction (extractRule Action $head))
-            ($isContextSimilar (areSimilar $ruleContext $matchingContext))
-            ($isActionSimilar (areSimilar $ruleAction $matchingAction))
+            ($matchingContext (eval (extractRule ContextValues $head)))
+            ($matchingAction (eval (extractRule Action $head)))
+            ; ($_ (println! ("Matching context & action :" $matchingContext $matchingAction)))
+            ($isContextSimilar (eval (areSimilar $ruleContext $matchingContext)))
+            ($isActionSimilar (eval (areSimilar $ruleAction $matchingAction)))
             ($restMatches (findMatchingConjunctions $ruleContext $ruleAction $tail))
         ) (if (and $isContextSimilar $isActionSimilar)
             (cons-atom $head $restMatches)
@@ -37,8 +38,8 @@
 
 (= (findConjunctions $rule $rules) (
     let* (
-        ($ruleContext (extractRule ContextValues $rule))
-        ($ruleAction (extractRule Action $rule))
+        ($ruleContext (eval (extractRule ContextValues $rule)))
+        ($ruleAction (eval (extractRule Action $rule)))
         ($matchingRules (findMatchingConjunctions $ruleContext $ruleAction $rules))
         ($conjoinedGoals (map-atom $matchingRules $matchingRule (reason-conj $rule $matchingRule)))
     ) $conjoinedGoals
@@ -48,17 +49,17 @@
     let* (
         ($maxRuleId 200) ;; TODO: Fix this for rule IDs
 
-        ($ruleGoal (extractRule Goal $rule))
-        ($matchingRuleGoal (extractRule Goal $matchingRule))
-        ($ruleContext (extractRule Context $rule))
-        ($ruleContextSTV (extractRule ContextSTV $rule))
-        ($ruleAction (extractRule Action $rule))
-        ($ruleGoalSTV (extractRule GoalSTV $rule))
+        ($ruleGoal (eval (extractRule Goal $rule)))
+        ($matchingRuleGoal (eval (extractRule Goal $matchingRule)))
+        ($ruleContext (eval (extractRule Context $rule)))
+        ($ruleContextSTV (eval (extractRule ContextSTV $rule)))
+        ($ruleAction (eval (extractRule Action $rule)))
+        ($ruleGoalSTV (eval (extractRule GoalSTV $rule)))
         ($newGoal (union-atom $ruleGoal $matchingRuleGoal)) 
         ($uniqueNewGoal (unique-atom $newGoal))
 
-        ((STV $ruleStrength $ruleConfidence) (extractRule STV $rule))
-        ((STV $matchingStrength $matchingConfidence) (extractRule STV $matchingRule))
+        ((STV $ruleStrength $ruleConfidence) (eval (extractRule STV $rule)))
+        ((STV $matchingStrength $matchingConfidence) (eval (extractRule STV $matchingRule)))
         ($newStrength (* $ruleStrength $matchingStrength))
         ($newConfidence (min $ruleConfidence $matchingConfidence))
         ($newSTV (STV $newStrength $newConfidence))

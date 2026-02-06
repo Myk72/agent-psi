@@ -1,13 +1,15 @@
-!(register-module! ../../../../metta-trader)
+!(import! &self ../../inference/conjunction)
+!(import! &self ../../formula)
+!(import! &self ../../utils)
 
-!(import! &self metta-trader:pln:inference:deduction)
-!(import! &self metta-trader:pln:formula)
-!(import! &self metta-trader:pln:rule:rule)
-!(import! &self metta-trader:pln:utils)
+!(import! &self ../../rule/query)
+!(import! &self ../../rule/inference-utils)
+!(import! &self ../../rule/helpers)
 
 !(bind! &ruleSpace (new-space))
 
-!(add-reduct &ruleSpace (superpose (
+(= (addRule $ruleSpace) ( 
+    let $rules (superpose (
     ;; Rule 1
     (: Rule 1
         (TTV 0)
@@ -33,12 +35,12 @@
         (IMPLICATION 
             (AND 
                 (Context (STV 0.2 0.1) (AND (
-                    (RIGHT_SQUARE (STV 0.2 0.1))
+                    (LEFT_SQUARE (STV 0.2 0.1))
                     (STILL_ALIVE (STV 0.2 0.1)))))
-                (Action (SEQ_AND (MOVE_LEFT))))
+                (Action (SEQ_AND (MOVE_RIGHT))))
             (Goal (STV 0.2 0.1) (AND (
                     (CENTER_SQUARE (STV 0.2 0.1))
-                    (STILL_ALIVE (STV 0.2 0.1)))
+                    (DEAD (STV 0.2 0.1)))
         )) 
     ))
 
@@ -52,13 +54,16 @@
                 (Context (STV 0.2 0.1) (AND (
                     (CENTER_SQUARE (STV 0.2 0.1))
                     (STILL_ALIVE (STV 0.2 0.1)))))
-                (Action (SEQ_AND (MOVE_RIGHT))))
+                (Action (SEQ_AND (MOVE_RIGHT)) ) )
             (Goal (STV 0.2 0.1) (AND (
                     (RIGHT_SQUARE (STV 0.2 0.1))
                     (STILL_ALIVE (STV 0.2 0.1)))
         )) 
     ))
 
-)))
+    )) (add-atom $ruleSpace $rules)
+))
 
-!(pln-deduction &ruleSpace)
+
+!(addRule &ruleSpace)
+!(pln-conjunction (collapse(get-atoms &ruleSpace)))

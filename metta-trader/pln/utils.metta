@@ -1,18 +1,18 @@
 ;; Save Division: Avoids dividing by zero
-(: safe (-> Number Number Number))
+
 (= (/safe $A $B) (
     if (> $B 0.0)
        (/ $A $B)
        (empty))
 )
 
-(: isMember (-> Expression Number Number))
+
 (= (isMember $list $val) (
     let $exists (collapse (let $member (superpose $list) (if (== $member $val) True Empty)))
     (if (== $exists ()) 0 1)
 ))
 
-(: sum (-> Expression Number))
+
 (= (sum $list) (
     if (== $list ())
         0
@@ -22,7 +22,7 @@
         ) (+ $head $rest))
 ))
 
-(: countSimilar (-> Expression Expression Number))
+
 (= (countSimilar $listOne $listTwo) (
     let* (
         ($count (collapse (let $value (superpose $listOne) (let $isIn (isMember $listTwo $value) $isIn))))
@@ -43,25 +43,16 @@
   )
 )
 
-(: min (-> Number Number Number))
-(= (min $num1 $num2) (
-    if (< $num1 $num2)
-        $num1
-        $num2
+(= (round $x $d) 
+   (py-call ("round" $x $d)))
+
+
+(= (toInt $num) (
+    py-call ("int" $num)
 ))
 
-(: div (-> Number Number Number))
-(= (div $num $denom) (
-    (py-atom operator.truediv) $num $denom
-))
 
-(: round (-> Number Number Number))
-(= (round $num $sig) ((py-atom round) $num $sig))
 
-(: toInt (-> Number Number))
-(= (toInt $num) ((py-atom int) $num))
-
-(: flattenList (-> Expression Expression))
 (= (flattenList $list) (
     if (== () $list)
         ()
