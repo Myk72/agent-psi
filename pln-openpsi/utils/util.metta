@@ -53,3 +53,27 @@
 (= (generateIdRand) (
     ((py-atom random.randint) 10000 99999)
 ))
+
+(: (removeDuplicateRules (-> hyperon::space::DynSpace Expression)))
+(= (removeDuplicateRules $ruleSpace) (
+    let* (
+        ($rules (collapse (get-atoms $ruleSpace)))
+    ) (remove-duplicate-rules $rules)
+))
+
+(: isPresent (-> Expression Number Bool))
+(= (isPresent $list $val) (
+    let $exists (collapse (let $member (superpose $list) (if (== $member $val) True Empty)))
+    (if (== $exists ()) False True)
+))
+
+(: (remove-duplicate-rules (-> Expression Expression)))
+(= (remove-duplicate-rules $rules) (
+    if (== () $rules)
+        ()
+        (let* (
+            (($head $tail) (decons-atom $rules))
+            ($rest (remove-duplicate-rules $tail))
+            ($exists (isPresent $rest $head))
+        ) (if $exists $rest (cons-atom $head $rest)))
+))
