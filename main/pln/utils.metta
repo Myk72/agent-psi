@@ -1,3 +1,11 @@
+;; Save Division: Avoids dividing by zero
+(: safe (-> Number Number Number))
+(= (/safe $A $B) (
+    if (> $B 0.0)
+       (/ $A $B)
+       (empty))
+)
+
 (: isMember (-> Expression Number Bool))
 (= (isMember $list $val) (
     let $exists (collapse (let $member (superpose $list) (if (== $member $val) True Empty)))
@@ -50,6 +58,4 @@
 (: round (-> Number Number Number))
 (= (round $num $sig) ((py-atom round) $num $sig))
 
-(= (generateIdRand) (
-    ((py-atom random.randint) 10000 99999)
-))
+
