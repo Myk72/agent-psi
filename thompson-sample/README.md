@@ -1,6 +1,6 @@
 # Thompson Sampling
 
-* This version of thompson sampling uses the following rule representation
+* This version of thompson sampling uses the following rule representation (updated version)
 ```metta
 (: Rule 1
         (TTV 0)
@@ -19,11 +19,11 @@
     ))
 ```
 
-## Notes
-* Some recursive functions can be optimized using non-determinism (especially in the util.metta)
-
 ## What to run?
 
 ```metta
 metta planner-test.metta
 ```
+
+## Notes
+* Some recursive functions can be optimized using non-determinism (especially in the util.metta)
