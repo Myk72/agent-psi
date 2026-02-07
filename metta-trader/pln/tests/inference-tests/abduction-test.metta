@@ -65,4 +65,4 @@
 ))
 
 !(addRuleAbd &ruleSpace)
-!(pln-abduction (collapse(get-atoms &ruleSpace)))
+!(test (pln-abduction (collapse(get-atoms &ruleSpace))) ((: Rule 100 (TTV 1) (STV 0.3125 0.001996007984031936) (Complexity 1) (IMPLICATION (AND (Context (STV 0.2 0.1) (AND ((RIGHT_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1))))) (Action (SEQ_AND (MOVE_LEFT)))) (Goal (STV 0.2 0.1) (AND ((LEFT_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1)))))))))

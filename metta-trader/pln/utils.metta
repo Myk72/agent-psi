@@ -8,7 +8,7 @@
 
 
 (= (isMember $list $val) (
-    let $exists (collapse (let $member (superpose $list) (if (== $member $val) True Empty)))
+    let $exists (collapse (let $member (superpose $list) (if (== $member $val) True (empty))))
     (if (== $exists ()) 0 1)
 ))
 

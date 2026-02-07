@@ -1,7 +1,13 @@
 (= (getMatchingPremises $type $premises $rule $remRules) (
     let* (
         ($ruleGoal (extractRule GoalValues $rule))
-        ($matchingRules (eval (filter-rules-by-goal $ruleGoal $remRules)))
+        ($ruleContextAction (extractRule ContextAndAction $rule))
+        ($matchingRules (case $type (
+            (abduction (eval (filter-rules-by-goal $ruleGoal $remRules)))
+            (deduction (eval (filter-rules-by-context $ruleGoal $remRules)))
+            (induction (eval (filter-rules-by-antecedent $ruleContextAction $remRules)))
+            ($default ())
+        )))
     ) (
         if (== $type deduction)
             (map-atom $matchingRules $matchingRule (reason-ded $rule $matchingRule $premises))

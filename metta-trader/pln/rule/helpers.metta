@@ -143,6 +143,20 @@
             $restMatches))
 ))
 
+(= (filter-rules-by-antecedent $antecedent $rules) (
+    if (== () $rules)
+        ()
+        (let* (
+            (($head $tail) (decons-atom $rules))
+            ($ruleAntecedent (extractRule ContextAndAction $head))
+            ($isMatch (areSimilar $antecedent $ruleAntecedent))
+            ($restMatches (filter-rules-by-antecedent $antecedent $tail))
+        ) (if $isMatch
+            (cons-atom $head $restMatches)
+            $restMatches))
+))
+
+
 ;; (: processRules (-> Expression Number Number Expression))
 (= (processRules $rules $ruleId $ttv) (
     if (== $rules ())
