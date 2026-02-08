@@ -1,3 +1,8 @@
+(= (unify $a $b $then $else)
+   (if (= $a $b)
+       (eval $then)
+       (eval $else)))
+       
 (= (extractRule $section $rule) (
     case $section (
         (Id (extractRuleId $rule))
@@ -17,14 +22,14 @@
     )
 ))
 
-(: extractRuleId (-> Expression Number))
+; (: extractRuleId (-> Expression Number))
 (= (extractRuleId $rule) (
     unify (: Rule $id $ttv $stv $complexity $implication) $rule
         $id
         -1
 ))
 
-(: extractRuleTTV (-> Expression Number))
+; (: extractRuleTTV (-> Expression Number))
 (= (extractRuleTTV $rule) (
     unify (: Rule $id (TTV $ttv) $stv $complexity $implication) $rule
         $ttv
@@ -97,7 +102,7 @@
 ;; General Rule helpers
 
 ;; For now complexity is the number of actions in the rule
-(: calculateComplexity (-> Expression Number))
+; (: calculateComplexity (-> Expression Number))
 (= (calculateComplexity $rule) (
     let* (
         ($action (extractRuleAction $rule))
@@ -106,7 +111,7 @@
 ))
 
 ;; This could be optimized by adding an atom that tracks the max TTV in the rule space instead of searching every time
-(: findCurrentTTV (-> hyperon::space::DynSpace Number))
+; (: findCurrentTTV (-> hyperon::space::DynSpace Number))
 (= (findCurrentTTV $ruleSpace) (
     let* (
         ($rules (collapse (get-atoms $ruleSpace)))
@@ -115,7 +120,7 @@
     ) (max-atom $ttvValues) ;; For some reason max-atom returns a float instead of int
 ))
 
-(: findCurrentRuleId (-> hyperon::space::DynSpace Number))
+; (: findCurrentRuleId (-> hyperon::space::DynSpace Number))
 (= (findCurrentRuleId $ruleSpace) (
     let* (
         ($rules (collapse (get-atoms $ruleSpace)))

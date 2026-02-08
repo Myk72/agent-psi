@@ -23,7 +23,6 @@
 !(test (applyTravel (TravelRule) ((PLANET A) (HAS FOOD)) 10) (((PLANET B) (HAS FOOD)) 9))
 !(test (applyTravel (TravelRule) ((PLANET A)) 10) (((PLANET B)) 9))
 
-
 (= (BuyRule) 
         (: Rule 9
             (TTV 0)
