@@ -4,6 +4,7 @@
 !(import! &self ../inference/conjunction)
 !(import! &self ../formula)
 !(import! &self ../utils)
+!(import! &self ../engine)
 
 !(import! &self ../rule/query)
 !(import! &self ../rule/inference-utils)
@@ -69,31 +70,12 @@
 
 
 
-(= (pln-reasoning $rules) (
-    let* (
-        ($abductionResults (pln-abduction $rules))
-        ($conjunctionResults (pln-conjunction $rules))
-        ($deductionResults (pln-deduction $rules))
-        ($inductionResults (pln-induction $rules))
-
-        ($_ (println! (Abduction Results: $abductionResults)))
-        ($_ (println! (Conjunction Results: $conjunctionResults)))
-        ($_ (println! (Deduction Results: $deductionResults)))
-        ($_ (println! (Induction Results: $inductionResults)))
-        
-        ($reasonedRules (flattenList ($deductionResults $conjunctionResults $abductionResults $inductionResults)))
-        ; ($_ (println! ("Reasoned size: " (size-atom $reasonedRules))))
-        
-        ;; Give them unique IDs, TTV, and Complexity
-        ($prevRuleId (getLatestRuleId $rules))
-        ($prevTTV (getCurrentTimeCycle $rules))
-        ($currRuleId (+ 1 $prevRuleId))
-        ($currTTV (+ 1 $prevTTV))
-        
-        ($newRules (processRules $reasonedRules $currRuleId $currTTV))
-    ) $newRules
-))
-
 !(addRule &ruleSpace)
 
-!(pln-reasoning (collapse (get-atoms &ruleSpace)))
+!(test (pln-reasoning (collapse (get-atoms &ruleSpace))) 
+    (
+        (: Rule 4 (TTV 1) (STV 0.3125 0.002) (Complexity 2) (IMPLICATION (AND (Context (STV 0.2 0.1) (AND ((LEFT_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1))))) (Action (SEQ_AND (MOVE_RIGHT MOVE_RIGHT)))) (Goal (STV 0.2 0.1) (AND ((RIGHT_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1))))))) 
+        (: Rule 5 (TTV 1) (STV 0.25 0.002) (Complexity 1) (IMPLICATION (AND (Context (STV 0.2 0.1) (AND ((LEFT_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1))))) (Action (SEQ_AND (MOVE_RIGHT)))) (Goal (STV 0.2 0.1) (AND ((CENTER_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1)) (DEAD (STV 0.2 0.1))))))) 
+        (: Rule 6 (TTV 1) (STV 0.3125 0.001996007984031936) (Complexity 1) (IMPLICATION (AND (Context (STV 0.2 0.1) (AND ((CENTER_SQUARE (STV 0.2 0.1)) (DEAD (STV 0.2 0.1))))) (Action (SEQ_AND (MOVE_RIGHT)))) (Goal (STV 0.2 0.1) (AND ((CENTER_SQUARE (STV 0.2 0.1)) (STILL_ALIVE (STV 0.2 0.1)))))))
+    )
+)
