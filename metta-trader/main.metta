@@ -29,7 +29,7 @@
                         Reasoned Rules: (size-atom $reasonedRules) 
                         Combined Rules: (size-atom $combinedRules))))
             ($applicableRules (getApplicableRules $contexts $money $combinedRules))
-            ; ($_ (println! (Applicable Rules: (size-atom $applicableRules))))
+            ($_ (println! (Applicable Rules: (size-atom $applicableRules))))
             (($score $selectedRule) (thompson-sample $applicableRules))
             ; ($_ (println! ("Selected Rule:"  $selectedRule with score: $score)))
             (($newContexts $newMoney) (applyRule $selectedRule $contexts $money))

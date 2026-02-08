@@ -51,53 +51,53 @@
                 )))
         ))
 
-        ; ;; Buy FOOD
-        ; (: Rule 7
-        ;     (TTV 0)
-        ;     (STV 0.5 0.002)
-        ;     (Complexity 1)
-        ;     (IMPLICATION
-        ;         (AND
-        ;             (Context (STV 0.2 0.1) (AND (((PLANET A) (STV 0.2 0.1)))))
-        ;             (Action (SEQ_AND (BUY FOOD)))
-        ;         )
-        ;         (Goal (STV 0.2 0.1) (AND (
-        ;             ((PLANET A) (STV 0.2 0.1))
-        ;             ((HAS FOOD) (STV 0.2 0.1))
-        ;         )))
-        ; ))
+        ;; Buy FOOD
+        (: Rule 7
+            (TTV 0)
+            (STV 0.5 0.002)
+            (Complexity 1)
+            (IMPLICATION
+                (AND
+                    (Context (STV 0.2 0.1) (AND (((PLANET A) (STV 0.2 0.1)))))
+                    (Action (SEQ_AND (BUY FOOD)))
+                )
+                (Goal (STV 0.2 0.1) (AND (
+                    ((PLANET A) (STV 0.2 0.1))
+                    ((HAS FOOD) (STV 0.2 0.1))
+                )))
+        ))
 
-        ; ; ;; Buy Food in B
-        ; (: Rule 8
-        ;     (TTV 0)
-        ;     (STV 0.5 0.002)
-        ;     (Complexity 1)
-        ;     (IMPLICATION
-        ;         (AND
-        ;             (Context (STV 0.2 0.1) (AND (((PLANET B) (STV 0.2 0.1)))))
-        ;             (Action (SEQ_AND (BUY FOOD)))
-        ;         )
-        ;         (Goal (STV 0.2 0.1) (AND (
-        ;             ((PLANET B) (STV 0.2 0.1))
-        ;             ((HAS FOOD) (STV 0.2 0.1))
-        ;         )))
-        ; ))
+        ; ;; Buy Food in B
+        (: Rule 8
+            (TTV 0)
+            (STV 0.5 0.002)
+            (Complexity 1)
+            (IMPLICATION
+                (AND
+                    (Context (STV 0.2 0.1) (AND (((PLANET B) (STV 0.2 0.1)))))
+                    (Action (SEQ_AND (BUY FOOD)))
+                )
+                (Goal (STV 0.2 0.1) (AND (
+                    ((PLANET B) (STV 0.2 0.1))
+                    ((HAS FOOD) (STV 0.2 0.1))
+                )))
+        ))
 
-        ; ;; Buy food at C
-        ; (: Rule 9
-        ;     (TTV 0)
-        ;     (STV 0.5 0.002)
-        ;     (Complexity 1)
-        ;     (IMPLICATION
-        ;         (AND
-        ;             (Context (STV 0.2 0.1) (AND (((PLANET C) (STV 0.2 0.1)))))
-        ;             (Action (SEQ_AND (BUY FOOD)))
-        ;         )
-        ;         (Goal (STV 0.2 0.1) (AND (
-        ;             ((PLANET C) (STV 0.2 0.1))
-        ;             ((HAS FOOD) (STV 0.2 0.1))
-        ;         )))
-        ; ))
+        ;; Buy food at C
+        (: Rule 9
+            (TTV 0)
+            (STV 0.5 0.002)
+            (Complexity 1)
+            (IMPLICATION
+                (AND
+                    (Context (STV 0.2 0.1) (AND (((PLANET C) (STV 0.2 0.1)))))
+                    (Action (SEQ_AND (BUY FOOD)))
+                )
+                (Goal (STV 0.2 0.1) (AND (
+                    ((PLANET C) (STV 0.2 0.1))
+                    ((HAS FOOD) (STV 0.2 0.1))
+                )))
+        ))
 
         ; ;; Buy METAL at A
         ; (: Rule 10
@@ -147,7 +147,7 @@
         ;         )))
         ; ))
 
-        ;; Buy FUEL at A
+        ; ; Buy FUEL at A
         ; (: Rule 13
         ;     (TTV 0)
         ;     (STV 0.5 0.002)
@@ -161,7 +161,7 @@
         ;         )
         ;         (Goal (STV 0.2 0.1) (AND (
         ;             ((PLANET A) (STV 0.2 0.1))
-        ;             (HAS FUEL (STV 0.2 0.1))
+        ;             ((HAS FUEL) (STV 0.2 0.1))
         ;         )))
         ; ))
 
@@ -179,7 +179,7 @@
         ;         )
         ;         (Goal (STV 0.2 0.1) (AND (
         ;             ((PLANET B) (STV 0.2 0.1))
-        ;             (HAS FUEL (STV 0.2 0.1))
+        ;             ((HAS FUEL) (STV 0.2 0.1))
         ;         )))
         ; ))
 
@@ -197,63 +197,63 @@
         ;         )
         ;         (Goal (STV 0.2 0.1) (AND (
         ;             ((PLANET C) (STV 0.2 0.1))
-        ;             (HAS FUEL (STV 0.2 0.1))
+        ;             ((HAS FUEL) (STV 0.2 0.1))
         ;         )))
         ; ))
 
-        ; ;; Sell FOOD at A
-        ; (: Rule 16
-        ;     (TTV 0)
-        ;     (STV 0.5 0.002)
-        ;     (Complexity 1)
-        ;     (IMPLICATION
-        ;         (AND
-        ;             (Context (STV 0.2 0.1) (AND (
-        ;                 ((PLANET A) (STV 0.2 0.1))
-        ;                 ((HAS FOOD) (STV 0.1 0.1))
-        ;             )))
-        ;             (Action (SEQ_AND (SELL FOOD)))
-        ;         )
-        ;         (Goal (STV 0.2 0.1) (AND (
-        ;             ((PLANET A) (STV 0.2 0.1))
-        ;         )))
-        ; ))
+        ;; Sell FOOD at A
+        (: Rule 16
+            (TTV 0)
+            (STV 0.5 0.002)
+            (Complexity 1)
+            (IMPLICATION
+                (AND
+                    (Context (STV 0.2 0.1) (AND (
+                        ((PLANET A) (STV 0.2 0.1))
+                        ((HAS FOOD) (STV 0.1 0.1))
+                    )))
+                    (Action (SEQ_AND (SELL FOOD)))
+                )
+                (Goal (STV 0.2 0.1) (AND (
+                    ((PLANET A) (STV 0.2 0.1))
+                )))
+        ))
 
-        ; ;; Sell FOOD at B
-        ; (: Rule 17
-        ;     (TTV 0)
-        ;     (STV 0.5 0.002)
-        ;     (Complexity 1)
-        ;     (IMPLICATION
-        ;         (AND
-        ;             (Context (STV 0.2 0.1) (AND (
-        ;                 ((PLANET B) (STV 0.2 0.1))
-        ;                 ((HAS FOOD) (STV 0.1 0.1))
-        ;             )))
-        ;             (Action (SEQ_AND (SELL FOOD)))
-        ;         )
-        ;         (Goal (STV 0.2 0.1) (AND (
-        ;             ((PLANET B) (STV 0.2 0.1))
-        ;         )))
-        ; ))
+        ;; Sell FOOD at B
+        (: Rule 17
+            (TTV 0)
+            (STV 0.5 0.002)
+            (Complexity 1)
+            (IMPLICATION
+                (AND
+                    (Context (STV 0.2 0.1) (AND (
+                        ((PLANET B) (STV 0.2 0.1))
+                        ((HAS FOOD) (STV 0.1 0.1))
+                    )))
+                    (Action (SEQ_AND (SELL FOOD)))
+                )
+                (Goal (STV 0.2 0.1) (AND (
+                    ((PLANET B) (STV 0.2 0.1))
+                )))
+        ))
 
-        ; ;; Sell FOOD at C
-        ; (: Rule 18
-        ;     (TTV 0)
-        ;     (STV 0.5 0.002)
-        ;     (Complexity 1)
-        ;     (IMPLICATION
-        ;         (AND
-        ;             (Context (STV 0.2 0.1) (AND (
-        ;                 ((PLANET C) (STV 0.2 0.1))
-        ;                 ((HAS FOOD) (STV 0.1 0.1))
-        ;             )))
-        ;             (Action (SEQ_AND (SELL FOOD)))
-        ;         )
-        ;         (Goal (STV 0.2 0.1) (AND (
-        ;             ((PLANET C) (STV 0.2 0.1))
-        ;         )))
-        ; ))
+        ;; Sell FOOD at C
+        (: Rule 18
+            (TTV 0)
+            (STV 0.5 0.002)
+            (Complexity 1)
+            (IMPLICATION
+                (AND
+                    (Context (STV 0.2 0.1) (AND (
+                        ((PLANET C) (STV 0.2 0.1))
+                        ((HAS FOOD) (STV 0.1 0.1))
+                    )))
+                    (Action (SEQ_AND (SELL FOOD)))
+                )
+                (Goal (STV 0.2 0.1) (AND (
+                    ((PLANET C) (STV 0.2 0.1))
+                )))
+        ))
 
         ; ;; Sell METAL at A
         ; (: Rule 19

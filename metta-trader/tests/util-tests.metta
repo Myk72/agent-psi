@@ -1,17 +1,20 @@
 !(import! &self ../rule-ops)
 !(import! &self ../world)
 !(import! &self ../utils)
+
+(= (testSTV) (1.0 0.9))
+
 ;; Test for getting an item
-!(test (getItem ((HAS FOOD) (PLANET A))) FOOD)
-!(test (getItem ((PLANET A) (HAS FOOD))) FOOD)
-!(test (getItem ((PLANET C) (HAS FUEL))) FUEL)
+!(test (getItem (((HAS FOOD) (testSTV)) ((PLANET A) (testSTV)))) (FOOD (testSTV)))
+!(test (getItem (((PLANET A) (testSTV)) ((HAS FOOD) (testSTV)))) (FOOD (testSTV)))
+!(test (getItem (((PLANET C) (testSTV)) ((HAS FUEL) (0.8 0.8)))) (FUEL (0.8 0.8)))
 
 ;; Test for evaluating state
-!(test (evaluateState ((HAS FOOD) (PLANET A)) 10) 25)
-!(test (evaluateState ((HAS FUEL) (PLANET B)) 0) 16)
-!(test (evaluateState ((HAS METAL) (PLANET C)) 23) 38)
+!(test (evaluateState (((HAS FOOD) (1.0 0.9)) ((PLANET A) (1.0 0.9))) 10) 18)
+!(test (evaluateState (((HAS FUEL) (1.0 0.9)) ((PLANET B) (1.0 0.9))) 0) 18)
+!(test (evaluateState (((HAS METAL) (1.0 0.9)) ((PLANET C) (1.0 0.9))) 23) 45)
 
 ;; Test for getting the planet
-!(test (getPlanetFromContexts ((PLANET C))) C)
-!(test (getPlanetFromContexts ((PLANET A) (HAS METAL))) A)
-!(test (getPlanetFromContexts ((HAS METAL) (PLANET A))) A)
+!(test (getPlanetFromContexts (((PLANET C) (testSTV)))) C)
+!(test (getPlanetFromContexts (((PLANET A) (testSTV)) ((HAS METAL) (testSTV)))) A)
+!(test (getPlanetFromContexts (((HAS METAL) (testSTV)) ((PLANET A) (testSTV)))) A)
