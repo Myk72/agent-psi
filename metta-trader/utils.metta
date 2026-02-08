@@ -35,8 +35,8 @@
             (SELL (
                 let* (
                     ($item (index-atom $ruleActions 1))
-                    ($currItem (getItem $contexts))
-                ) (if (== $item $currItem)
+                    (($foundName $stv) (getItem $contexts $item))
+                ) (if (== $item $foundName)
                     True
                     False
                 )
@@ -44,7 +44,7 @@
 
             (BUY (
                 let* (
-                    ($item (getItem $ruleGoal))
+                    (($item $stv) (getItem $ruleGoal))
                     ($itemPrice (eval (getItemPrice $item $currPlanet)))
                 ) (if (>= $money $itemPrice ) 
                     True
@@ -81,15 +81,14 @@
         )))
 )
 
-(= (addItem $contexts $item) (
+(= (addItem $contexts $newItem $newStv) (
     if (== $contexts ())
-        (cons-atom ((HAS $item) (STV 0.2 0.1)) ())
+        (cons-atom ((HAS $newItem) $newStv) ())
         (let* (
             (($head $tail) (decons-atom $contexts))
             (($data $stv) $head)
-            ($contextType (index-atom $data 0))
-            ($rest (addItem $tail $item))
-        ) (if (== $contextType HAS)
+            ($rest (addItem $tail $newItem $newStv))
+        ) (if (== $data (HAS $newItem))
             $rest
             (cons-atom $head $rest)
         ))
@@ -101,9 +100,10 @@
         (let* (
             (($head $tail) (decons-atom $contexts))
             (($data $stv) $head)
+            ($contextType (index-atom $data 0))
             ($contextValue (index-atom $data 1))
             ($rest (removeItem $tail $item))
-        ) (if (== $contextValue $item)
+        ) (if (and (== $contextType HAS) (== $contextValue $item))
             $rest
             (cons-atom $head $rest)
         ))
@@ -123,7 +123,8 @@
 
 (= (applySell $rule $contexts $money) (
     let* (
-        ($item (getItem $contexts))
+        ($ruleActions (extractRule Action $rule))
+        ($item (index-atom $ruleActions 1))
         ($planet (getPlanetFromContexts $contexts))
         ($newContext (removeItem $contexts $item))
         ($newMoney (+ $money (eval (getItemPrice $item $planet))))
@@ -133,10 +134,10 @@
 (= (applyBuy $rule $contexts $money) (
     let* (
         ($ruleGoal (extractRule GoalValues $rule))
-        ($item (getItem $ruleGoal))
+        (($item $stv) (getItem $ruleGoal))
         ($planet (getPlanetFromContexts $ruleGoal))
         ($itemPrice (eval (getItemPrice $item $planet)))
-        ($newContext (addItem $contexts $item))
+        ($newContext (addItem $contexts $item $stv))
         ($newMoney (- $money $itemPrice))
     ) ($newContext $newMoney)
 ))
@@ -154,15 +155,29 @@
 
 (= (getItem $contexts) (
     if (== $contexts ())
-        ()
+        (() ())
         (let* (
             (($head $tail) (decons-atom $contexts))
             (($data $stv) $head)
             ($contextType (index-atom $data 0))
             ($itemName (index-atom $data 1))
         ) (if (== $contextType HAS)
-            $itemName
+            ($itemName $stv)
             (getItem $tail)
+        ))
+))
+
+(= (getItem $contexts $targetItem) (
+    if (== $contexts ())
+        (() ())
+        (let* (
+            (($head $tail) (decons-atom $contexts))
+            (($data $stv) $head)
+            ($contextType (index-atom $data 0))
+            ($itemName (index-atom $data 1))
+        ) (if (and (== $contextType HAS) (== $itemName $targetItem))
+            ($itemName $stv)
+            (getItem $tail $targetItem)
         ))
 ))
 

@@ -11,15 +11,16 @@
             (IMPLICATION
                 (AND
                     (Context (STV 0.2 0.1) (AND (
-                        (PLANET A (STV 0.2 0.1))
+                        ((PLANET A) (STV 0.2 0.1))
                     )))
                     (Action (SEQ_AND (BUY FUEL)))
                 )
                 (Goal (STV 0.2 0.1) (AND (
-                    (PLANET A (STV 0.2 0.1))
-                    (HAS FUEL (STV 0.1 0.1))
+                    ((PLANET A) (STV 0.2 0.1))
+                    ((HAS FUEL) (STV 0.1 0.1))
                 )))
         ))
 )
-!(test (isValidRule ((PLANET A)) 25 (TestRule)) True)
-!(test (isValidRule ((PLANET A)) 24 (TestRule)) False)
+
+!(test (isValidRule (((PLANET A) (STV 0.2 0.1))) 25 (TestRule)) True)
+!(test (isValidRule (((PLANET A) (STV 0.2 0.1))) 24 (TestRule)) False)
