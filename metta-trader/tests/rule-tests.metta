@@ -13,7 +13,7 @@
                     (Context (STV 0.2 0.1) (AND (
                         ((PLANET A) (STV 0.2 0.1))
                     )))
-                    (Action (SEQ_AND (BUY FUEL)))
+                    (Action (SEQ_AND ((BUY FUEL))))
                 )
                 (Goal (STV 0.2 0.1) (AND (
                     ((PLANET A) (STV 0.2 0.1))

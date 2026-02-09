@@ -10,9 +10,9 @@
 !(test (getItem (((PLANET C) (testSTV)) ((HAS FUEL) (0.8 0.8)))) (FUEL (0.8 0.8)))
 
 ;; Test for evaluating state
-!(test (evaluateState (((HAS FOOD) (1.0 0.9)) ((PLANET A) (1.0 0.9))) 10) 18)
-!(test (evaluateState (((HAS FUEL) (1.0 0.9)) ((PLANET B) (1.0 0.9))) 0) 18)
-!(test (evaluateState (((HAS METAL) (1.0 0.9)) ((PLANET C) (1.0 0.9))) 23) 45)
+!(test (evaluateState (((HAS FOOD) (1.0 0.9)) ((PLANET A) (1.0 0.9))) 10) 25)
+!(test (evaluateState (((HAS FUEL) (1.0 0.9)) ((PLANET B) (1.0 0.9))) 0) 16)
+!(test (evaluateState (((HAS METAL) (1.0 0.9)) ((PLANET C) (1.0 0.9))) 23) 38)
 
 ;; Test for getting the planet
 !(test (getPlanetFromContexts (((PLANET C) (testSTV)))) C)

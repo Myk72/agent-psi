@@ -18,4 +18,4 @@
 ;; Test for updating planet 
 !(test (updatePlanet (((PLANET A) (testSTV))) B) (((PLANET B) (testSTV))))
 !(test (updatePlanet (((PLANET A) (testSTV)) ((HAS FOOD) (testSTV))) B) (((PLANET B) (testSTV)) ((HAS FOOD) (testSTV))))
-!(test (updatePlanet (((PLANET A) (testSTV))) C) (((PLANET A) (testSTV))))
+!(test (updatePlanet (((PLANET A) (testSTV))) C) (((PLANET C) (testSTV))))

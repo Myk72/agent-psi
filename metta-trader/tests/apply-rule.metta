@@ -11,7 +11,7 @@
                     (Context (STV 0.2 0.1) (AND (
                         ((PLANET A) (STV 0.2 0.1))
                     )))
-                    (Action (SEQ_AND (TRAVEL)))
+                    (Action (SEQ_AND ((TRAVEL))))
                 )
                 (Goal (STV 0.2 0.1) (AND (
                     ((PLANET B) (STV 0.2 0.1))
@@ -31,7 +31,7 @@
             (IMPLICATION
                 (AND
                     (Context (STV 0.2 0.1) (AND (((PLANET C) (STV 0.2 0.1)))))
-                    (Action (SEQ_AND (BUY FOOD)))
+                    (Action (SEQ_AND ((BUY FOOD))))
                 )
                 (Goal (STV 0.2 0.1) (AND (
                     ((PLANET C) (STV 0.2 0.1))
@@ -59,7 +59,7 @@
                         ((PLANET A) (STV 0.2 0.1))
                         ((HAS FOOD) (STV 0.1 0.1))
                     )))
-                    (Action (SEQ_AND (SELL FOOD)))
+                    (Action (SEQ_AND ((SELL FOOD))))
                 )
                 (Goal (STV 0.2 0.1) (AND (
                     ((PLANET A) (STV 0.2 0.1))
